@@ -1,0 +1,78 @@
+import { useMediaQuery } from "react-responsive"
+import ChainImg from "../assets/chain.svg"
+import NormalBtn from "./common/NormalBtn"
+import RightImg from "../assets/right.svg"
+import TVTImg from "../assets/TVT.svg"
+import SolanaImg from "../assets/solana.svg"
+import { useTheme } from "../context/ThemeProvider"
+import ChainImgDark from "../assets/chain_dark.svg";
+import ChainImgLight from "../assets/chain_light.svg";
+import { HoverBorderGradient } from "./common/HoverBorderGradient"
+import { motion } from "framer-motion"
+import { useRef } from "react"
+
+export default function Banner(props: any) {
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1028px)' })
+    const { theme } = useTheme()
+    const scrollRef = useRef(null)
+
+    return (
+        <div className=" flex flex-col items-center w-full bg-white dark:bg-black ">
+            <div className="flex flex-row items-center gap-4 p-3 rounded-full border-[1px] border-[#DFE1E71A] mt-[200px]">
+                {
+                    theme == "dark" ?
+                        <img src={ChainImgDark} alt="dark" />
+                        :
+                        <img src={ChainImgLight} alt="light" />
+                }
+
+                <p className="text-[#393939] dark:text-[#C7C3D2] text-[16px]">
+                    Unmatched tracking for consumers and businesses at scale
+                </p>
+            </div>
+            <motion.div ref={scrollRef}
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -50, opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ root: scrollRef }}
+                transition={{ delay: 0.5, duration: 1 }}>
+                <h1 className=" flex flex-row items-start text-[56px] font-[400] bg-gradient-to-b from-white  to-[#B3ACBE]  text-transparent bg-clip-text mt-[10px]">
+                    Track Verify Trust
+                    <span className="text-[14px] ml-4 mt-4">
+                        TM
+                    </span>
+                </h1>
+            </motion.div>
+
+            <motion.div
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -50, opacity: 0 }}
+                transition={{ delay: 1.5, duration: 1 }}
+                className="mt-[20px]">
+                <HoverBorderGradient
+                    containerClassName="rounded-[12px]"
+                    as="button"
+                    className="dark:bg-black bg-white rounded-[12px] text-black dark:text-white flex items-center space-x-2  flex-row  gap-4"
+                >
+                    Register Now
+                    <img src={RightImg} alt="right" />
+                </HoverBorderGradient>
+            </motion.div>
+            <motion.div whileHover={{
+                scale: 1.2,
+                transition: { duration: 1 },
+            }} className="flex flex-col items-center">
+                <img src={TVTImg} alt="tvt" className="mt-[80px]" />
+                <div className="flex flex-row items-center mt-[40px] gap-[60px]">
+                    <p className="font-Conthrax text-[23px] font-[600] bg-gradient-to-r from-[#124968] via-[#3AE7ED]  to-[#139BD7]  text-transparent bg-clip-text">
+                        P O W E R E D  B Y
+                    </p>
+                    <img src={SolanaImg} />
+                </div>
+            </motion.div>
+        </div >
+    )
+}
+
